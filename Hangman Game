@@ -1,0 +1,37 @@
+import random
+
+def hangman():
+    words = ["python", "java", "kotlin", "javascript"]
+    word = random.choice(words)
+    guessed_letters = set()
+    correct_letters = set(word)
+    attempts = 6
+    guessed_word = ["_"] * len(word)
+
+    print("Welcome to Hangman!")
+
+    while attempts > 0 and set(guessed_word) != correct_letters:
+        print("\n" + " ".join(guessed_word))
+        print(f"Attempts remaining: {attempts}")
+        
+        guess = input("Guess a letter: ").lower()
+
+        if guess in guessed_letters:
+            print("You have already guessed that letter.")
+        elif guess in correct_letters:
+            guessed_letters.add(guess)
+            for idx, letter in enumerate(word):
+                if letter == guess:
+                    guessed_word[idx] = guess
+        else:
+            guessed_letters.add(guess)
+            attempts -= 1
+            print(f"The letter '{guess}' is not in the word.")
+
+    if set(guessed_word) == correct_letters:
+        print("\nCongratulations! You've guessed the word correctly.")
+    else:
+        print(f"\nSorry, you've run out of attempts. The word was '{word}'.")
+
+# Run the Hangman game
+hangman()
